@@ -1,0 +1,137 @@
+package GUI;
+
+import java.awt.EventQueue;
+import javax.swing.JOptionPane;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class VSesion extends JFrame implements ActionListener {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JLabel lblNewLabel;
+	private JLabel lblSecion;
+	private JLabel lblNewLabel_1;
+	private JTextField txtUser;
+	private JButton btnINICIARSESION;
+	private JButton btnCerrarSesion;
+	private JTextField txtContra;
+	private JLabel lblNewLabel_2;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					VSesion frame = new VSesion();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public VSesion() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 473, 216);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		{
+			lblNewLabel = new JLabel("RESTAURANTE YURI");
+			lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 27));
+			lblNewLabel.setBounds(78, 0, 264, 33);
+			contentPane.add(lblNewLabel);
+		}
+		{
+			lblSecion = new JLabel("SESION");
+			lblSecion.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+			lblSecion.setBounds(182, 52, 52, 27);
+			contentPane.add(lblSecion);
+		}
+		{
+			lblNewLabel_1 = new JLabel("USUARIO:");
+			lblNewLabel_1.setBounds(10, 93, 93, 14);
+			contentPane.add(lblNewLabel_1);
+		}
+		{
+			txtUser = new JTextField();
+			txtUser.setColumns(10);
+			txtUser.setBounds(113, 90, 188, 20);
+			contentPane.add(txtUser);
+		}
+		{
+			btnINICIARSESION = new JButton("INICIAR SESION");
+			btnINICIARSESION.addActionListener(this);
+			btnINICIARSESION.setBounds(311, 68, 136, 39);
+			contentPane.add(btnINICIARSESION);
+		}
+		{
+			btnCerrarSesion = new JButton("CERRAR SESION");
+			btnCerrarSesion.addActionListener(this);
+			btnCerrarSesion.setBounds(311, 118, 136, 39);
+			contentPane.add(btnCerrarSesion);
+		}
+		{
+			txtContra = new JTextField();
+			txtContra.setColumns(10);
+			txtContra.setBounds(113, 121, 188, 20);
+			contentPane.add(txtContra);
+		}
+		{
+			lblNewLabel_2 = new JLabel("CONTRASEÑA:");
+			lblNewLabel_2.setBounds(10, 124, 93, 14);
+			contentPane.add(lblNewLabel_2);
+		}
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnCerrarSesion) {
+			do_btnCerrarSesion_actionPerformed(e);
+		}
+		if (e.getSource() == btnINICIARSESION) {
+			do_btnNewButton_actionPerformed(e);
+		}
+	}
+	protected void do_btnNewButton_actionPerformed(ActionEvent e) {
+		  String usuario = txtUser.getText();
+	        String contrasena = txtContra.getText();
+
+	        if (usuario.equals("admin") && contrasena.equals("1234")) {
+	            VAdminOpciones VA = new VAdminOpciones();
+	            VA.setVisible(true);
+	            dispose(); 
+	        } else {
+	            JOptionPane.showMessageDialog(null, "Credenciales incorrectas");
+	        }
+	}
+	protected void do_btnCerrarSesion_actionPerformed(ActionEvent e) {
+		        int opcion = JOptionPane.showConfirmDialog(
+	            null,
+	            "¿Seguro que deseas cerrar sesión?",
+	            "Confirmar",
+	            JOptionPane.YES_NO_OPTION
+	        );
+	        
+	        if (opcion == JOptionPane.YES_OPTION) {
+	            VInicio VI = new VInicio();
+	            VI.setVisible(true);
+	            dispose(); 
+	        }
+	}
+}
