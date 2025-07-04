@@ -1,0 +1,623 @@
+package GUI;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+
+import ARREGLOS.ArregloDetallePedido;
+import ARREGLOS.ArregloHistorialPedido;
+import ARREGLOS.ArregloMenu;
+import ARREGLOS.ArregloPedido;
+import CLASES.DetallePedido;
+import CLASES.Pedido;
+import CLASES.Menu;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+
+
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseListener;
+
+import java.awt.event.MouseEvent;
+
+public class VRegistrarDetallesPedidos extends JFrame implements ActionListener, MouseListener {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JLabel lblDetallePedido;
+	private JLabel lblNewLabel_1;
+	private JTextField txtid_detalle;
+	private JLabel lblNewLabel_2;
+	private JComboBox<String> combopedido;
+	private JLabel lblNewLabel_3;
+	private JComboBox<String> combomenudetalle;
+	private JLabel lblNewLabel_4;
+	private JLabel lblNewLabel_5;
+	private JLabel lblNewLabel_6;
+	private JButton btnagregar;
+	private JButton btnEliminar;
+	private JButton btnModificar;
+	private JButton btnBuscar;
+	private JTextField txtcantidad;
+	private JTextField txtsubtotal;
+	private JScrollPane scrollPane;
+	private JTable table;
+	private JTextField txtpreciouni;
+	private ArregloHistorialPedido arreHistorial = new ArregloHistorialPedido();
+	private ArregloDetallePedido arredetpedido = new ArregloDetallePedido();
+	private ArregloPedido arrepedido = new ArregloPedido();
+	private ArregloMenu arremenu = new ArregloMenu();
+	private JButton btnNewButton;
+	private JButton btnNewButton_1;
+	
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					VRegistrarDetallesPedidos frame = new VRegistrarDetallesPedidos();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public VRegistrarDetallesPedidos() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 607, 602);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		{
+			lblDetallePedido = new JLabel("DETALLES PEDIDOS ");
+			lblDetallePedido.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+			lblDetallePedido.setBounds(230, 11, 195, 41);
+			contentPane.add(lblDetallePedido);
+		}
+		{
+			lblNewLabel_1 = new JLabel("ID:");
+			lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+			lblNewLabel_1.setBounds(56, 76, 28, 14);
+			contentPane.add(lblNewLabel_1);
+		}
+		{
+			txtid_detalle = new JTextField();
+			txtid_detalle.setColumns(10);
+			txtid_detalle.setBounds(94, 74, 86, 20);
+			contentPane.add(txtid_detalle);
+		}
+		{
+			lblNewLabel_2 = new JLabel("Pedido:");
+			lblNewLabel_2.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+			lblNewLabel_2.setBounds(28, 112, 46, 14);
+			contentPane.add(lblNewLabel_2);
+		}
+		{
+			combopedido = new JComboBox<String>();
+			combopedido.setBounds(94, 109, 155, 20);
+			contentPane.add(combopedido);
+		}
+		{
+			lblNewLabel_3 = new JLabel("Menú:");
+			lblNewLabel_3.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+			lblNewLabel_3.setBounds(35, 148, 46, 14);
+			contentPane.add(lblNewLabel_3);
+		}
+		{
+			combomenudetalle = new JComboBox<String>();
+			combomenudetalle.setBounds(94, 146, 155, 20);
+			contentPane.add(combomenudetalle);
+		}
+		{
+			lblNewLabel_4 = new JLabel("Cantidad:");
+			lblNewLabel_4.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+			lblNewLabel_4.setBounds(348, 78, 62, 14);
+			contentPane.add(lblNewLabel_4);
+		}
+		{
+			lblNewLabel_5 = new JLabel("Precio Uni:");
+			lblNewLabel_5.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+			lblNewLabel_5.setBounds(337, 114, 73, 14);
+			contentPane.add(lblNewLabel_5);
+		}
+		{
+			lblNewLabel_6 = new JLabel("Subtotal:");
+			lblNewLabel_6.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+			lblNewLabel_6.setBounds(354, 150, 56, 14);
+			contentPane.add(lblNewLabel_6);
+		}
+		{
+			btnagregar = new JButton("Agregar");
+			btnagregar.addActionListener(this);
+			btnagregar.setBounds(105, 194, 89, 23);
+			contentPane.add(btnagregar);
+		}
+		{
+			btnEliminar = new JButton("Eliminar");
+			btnEliminar.addActionListener(this);
+			btnEliminar.setBounds(204, 194, 89, 23);
+			contentPane.add(btnEliminar);
+		}
+		{
+			btnModificar = new JButton("Modificar");
+			btnModificar.addActionListener(this);
+			btnModificar.setBounds(303, 194, 89, 23);
+			contentPane.add(btnModificar);
+		}
+		{
+			btnBuscar = new JButton("Buscar");
+			btnBuscar.addActionListener(this);
+			btnBuscar.setBounds(402, 194, 89, 23);
+			contentPane.add(btnBuscar);
+		}
+		{
+			txtcantidad = new JTextField();
+			txtcantidad.setColumns(10);
+			txtcantidad.setBounds(424, 74, 86, 20);
+			contentPane.add(txtcantidad);
+		}
+		{
+			txtsubtotal = new JTextField();
+			txtsubtotal.setEditable(false);
+			txtsubtotal.setColumns(10);
+			txtsubtotal.setBounds(424, 146, 86, 20);
+			contentPane.add(txtsubtotal);
+		}
+		{
+			scrollPane = new JScrollPane();
+			scrollPane.setBounds(25, 234, 538, 263);
+			contentPane.add(scrollPane);
+			{
+				table = new JTable();
+				table.addMouseListener(this);
+				table.setFillsViewportHeight(true);
+				scrollPane.setViewportView(table);
+			}
+		}
+		{
+			txtpreciouni = new JTextField();
+			txtpreciouni.setEditable(false);
+			txtpreciouni.setColumns(10);
+			txtpreciouni.setBounds(424, 110, 86, 20);
+			contentPane.add(txtpreciouni);
+		}
+		{
+			btnNewButton = new JButton("VOLVER AL INICIO");
+			btnNewButton.addActionListener(this);
+			btnNewButton.setBounds(440, 519, 141, 33);
+			contentPane.add(btnNewButton);
+		}
+		{
+			btnNewButton_1 = new JButton("VOLVER ATRAS");
+			btnNewButton_1.addActionListener(this);
+			btnNewButton_1.setBounds(270, 519, 140, 33);
+			contentPane.add(btnNewButton_1);
+		}
+		combomenudetalle.addActionListener(e -> actualizarPrecioYSubtotal());
+
+	    txtcantidad.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+	        public void insertUpdate(javax.swing.event.DocumentEvent e) { actualizarPrecioYSubtotal(); }
+	        public void removeUpdate(javax.swing.event.DocumentEvent e) { actualizarPrecioYSubtotal(); }
+	        public void changedUpdate(javax.swing.event.DocumentEvent e) { actualizarPrecioYSubtotal(); }
+	    });
+		llenarcombopedido();
+		llenarcombomenu();
+		listar("");
+	}
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnNewButton_1) {
+			do_btnNewButton_1_actionPerformed(e);
+		}
+		if (e.getSource() == btnNewButton) {
+			do_btnNewButton_actionPerformed(e);
+		}
+		if (e.getSource() == btnBuscar) {
+			do_btnBuscar_actionPerformed(e);
+		}
+		if (e.getSource() == btnModificar) {
+			do_btnModificar_actionPerformed(e);
+		}
+		if (e.getSource() == btnEliminar) {
+			do_btnEliminar_actionPerformed(e);
+		}
+		if (e.getSource() == btnagregar) {
+			do_btnagregar_actionPerformed(e);
+		}
+	}
+	public void llenarcombopedido() {
+		ArrayList<Pedido> listapedido = new ArrayList<Pedido>();
+		ArregloPedido ped = new ArregloPedido();
+		listapedido =ped.listarPedido();
+		Iterator<Pedido> it = listapedido.iterator();
+		int i=0;
+		while (it.hasNext()) {
+			Object obj= it.next();
+			Pedido pedi = (Pedido)obj;
+			combopedido.addItem(pedi.getIdPedido() + " - " + pedi.getCliente().getNombre());
+			i++;
+		}
+	}
+	public void llenarcombomenu() {
+		ArrayList<Menu> listamenu = new ArrayList<Menu>();
+		ArregloMenu menucito = new ArregloMenu();
+		listamenu =menucito.listarMenus();
+		Iterator<Menu> it = listamenu.iterator();
+		int i=0;
+		while (it.hasNext()) {
+			Object obj= it.next();
+			Menu menucin = (Menu)obj;
+			combomenudetalle.addItem(menucin.getIdMenu() + " - " + menucin.getNombre() );
+			i++;
+		}
+	}
+	int leeriddetallepedido() {
+		try {
+			String id= txtid_detalle.getText().trim();
+			int idpositivo= Integer.parseInt(txtid_detalle.getText()); 
+			if(id.isEmpty()) {
+				JOptionPane.showMessageDialog(this, "El ID del detalle pedido no puede estar vacío.");
+				return -1;
+			}else if( idpositivo <0 ) {
+				JOptionPane.showMessageDialog(this, "El ID debe ser positivo.");
+				return -1;
+			}
+			return Integer.parseInt(id);
+		}catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "El ID del detalle pedido debe ser un número entero válido.");
+			return -1;
+		}
+		
+	}
+	int leercantidad() {
+		try {
+			String id= txtcantidad.getText().trim();
+			int idpositivo= Integer.parseInt(txtcantidad.getText()); 
+			if(id.isEmpty()) {
+				JOptionPane.showMessageDialog(this, "La cantidad no puede estar vacío.");
+				return -1;
+			}else if( idpositivo <0 ) {
+				JOptionPane.showMessageDialog(this, "La cantidad debe ser positiva.");
+				return -1;
+			}
+			return Integer.parseInt(id);
+		}catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "La cantidad debe ser un número entero válido.");
+			return -1;
+		}
+		
+	}
+	double leer_precio_Uni() {
+		String pre = txtpreciouni.getText().trim();
+		if (pre.isEmpty()) return 0;
+		try {
+			return Double.parseDouble(pre);
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "precio inválido.");
+			return -1;
+		}
+	}
+	double leersubtotal() {
+		String sub = txtsubtotal.getText().trim();
+		if (sub.isEmpty()) return 0;
+		try {
+			return Double.parseDouble(sub);
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "SubTotal inválido.");
+			return -1;
+		}
+	}
+	private int getidselect(JComboBox<String> combito) {
+		String itemsito = (String) combito.getSelectedItem();
+		if(itemsito == null || !itemsito.contains("-")) return -1;
+		try {
+			return Integer.parseInt(itemsito.split("-")[0].trim());
+		} catch (NumberFormatException ex) {
+			return -1;
+		}
+	}
+	
+	protected void do_btnagregar_actionPerformed(ActionEvent e) {
+	    int iddetpedido = leeriddetallepedido();
+	    if (iddetpedido == -1) return;
+
+	    int idpedido = getidselect(combopedido);
+	    int idmenu = getidselect(combomenudetalle);
+	    int cantidad = leercantidad();
+	    Menu menuSel   = arremenu.buscarID(idmenu);
+	    double precioU = leer_precio_Uni();
+	    double subtotal = leersubtotal();
+	    if(cantidad == -1) return;
+	    if (subtotal == -1) return;
+
+	    DetallePedido pedidito = arredetpedido.buscarID(iddetpedido);
+	    if (pedidito != null) {
+	        JOptionPane.showMessageDialog(this, "Ya existe un  detalle pedido con ese ID.");
+	        return;
+	    }
+
+	    DetallePedido nuevo = new DetallePedido(iddetpedido,
+	                               arrepedido.buscarID(idpedido),
+	                               menuSel,
+	                               cantidad,
+	                               precioU,
+	                               subtotal);
+	    arredetpedido.adicionarDetallePedido(nuevo);
+	    //borrar si sale error
+	   actualizarTotalEnHistorial(idpedido);
+	    JOptionPane.showMessageDialog(this, "Pedido con el ID " + idpedido + " agregado correctamente.");
+	    listar("");
+	    limpiarCampos();
+	}
+	protected void do_btnEliminar_actionPerformed(ActionEvent e) {
+		  int id = leeriddetallepedido();
+		    if (id == -1) return;
+		    DetallePedido detpedi = arredetpedido.buscarID(id);
+		    if (detpedi == null) {
+		        JOptionPane.showMessageDialog(this, "No se encontró un detalle pedido con ID: " + id);
+		        return;
+		    } else {
+		    	   int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar el  detalle pedido con ID: " + id + "?", "Confirmar", JOptionPane.YES_NO_OPTION);
+		    	   if(confirm == JOptionPane.YES_OPTION) {
+		    		   arredetpedido.eliminar(detpedi);
+		    		   int idPedido = detpedi.getPedido().getIdPedido(); 
+		               actualizarTotalEnHistorial(idPedido);
+		   	        JOptionPane.showMessageDialog(this, "Pedido eliminado correctamente.");
+		   	        listar("");
+		   	        	limpiarCampos();
+		   	        
+
+		    	   }
+		    	
+		    }
+
+	}
+	private void actualizarTotalEnHistorial(int idPedido) {
+	    Pedido p = arrepedido.buscarID(idPedido);
+	    if (p != null) {
+	        boolean esDelivery = p.getTipo_pedido().equalsIgnoreCase("Delivery");
+	        double nuevoTotal = new ArregloDetallePedido().calcularTotalPedido(idPedido, esDelivery);
+	        arreHistorial.actualizarTotal(p, nuevoTotal);
+	    }
+	}
+	private void actualizarPrecioYSubtotal() {
+	    
+	    int idMenuSel = getidselect(combomenudetalle);
+	    Menu mSel = arremenu.buscarID(idMenuSel);
+	    if (mSel == null) {                     
+	        txtpreciouni.setText("");
+	        txtsubtotal.setText("");
+	        return;
+	    }
+
+	    double precio = mSel.getPrecio();
+	    txtpreciouni.setText(String.valueOf(precio));
+
+	    int cant = (txtcantidad.getText().isBlank()) ? 0
+	                : Integer.parseInt(txtcantidad.getText());
+	    txtsubtotal.setText(String.valueOf(precio * cant));
+	}
+	
+	
+	private void limpiarCampos() {
+		txtid_detalle.setText("");
+		txtcantidad.setText("");
+		txtpreciouni.setText("");
+		txtsubtotal.setText("");
+		combopedido.setSelectedIndex(0);
+		combomenudetalle.setSelectedIndex(0);
+		
+	}
+	public void listar(String nom) {
+		DefaultTableModel modelo = new DefaultTableModel();
+
+		ArregloDetallePedido dpedi = new ArregloDetallePedido();
+
+		ArrayList<DetallePedido> lista = new ArrayList<DetallePedido>();
+
+		lista =dpedi.listardetallePedido();
+		modelo.setRowCount(lista.size());
+
+		Iterator<DetallePedido> it = lista.iterator();
+
+		modelo.addColumn("ID");
+
+		modelo.addColumn("ID pedido");
+
+		modelo.addColumn("ID menu");
+		
+		modelo.addColumn("Cantidad");
+
+		modelo.addColumn("Precio Uni");
+
+		modelo.addColumn("Subtotal");
+
+		int i = 0;
+
+		while(it.hasNext()) {
+
+		Object obj = it.next();
+
+		DetallePedido detallepedi = (DetallePedido)obj;
+
+		modelo.setValueAt(detallepedi.getIdDetalle(), i, 0);
+
+		modelo.setValueAt(detallepedi.getPedido().getIdPedido(), i, 1);
+
+		modelo.setValueAt(detallepedi.getMenu().getIdMenu(), i, 2);
+		
+		modelo.setValueAt(detallepedi.getCantidad(), i, 3);
+
+		modelo.setValueAt(detallepedi.getPrecio_uni(), i, 4);
+		
+		modelo.setValueAt(detallepedi.getSubtotal(), i, 5);
+
+		i++;
+
+		}
+
+		table.setModel(modelo);
+	}
+	
+	
+	
+	
+	
+	public void mouseClicked(MouseEvent e) {
+		if (e.getSource() == table) {
+			do_table_mouseClicked(e);
+		}
+	}
+	public void mouseEntered(MouseEvent e) {
+	}
+	public void mouseExited(MouseEvent e) {
+	}
+	public void mousePressed(MouseEvent e) {
+	}
+	public void mouseReleased(MouseEvent e) {
+	}
+	protected void do_table_mouseClicked(MouseEvent e) {
+		int fila = table.getSelectedRow();
+		txtid_detalle.setText(String.valueOf(table.getValueAt(fila, 0)));
+		String idpedido = String.valueOf(table.getValueAt(fila, 1));
+		combopedido.setSelectedItem(buscarComboItem(combopedido, idpedido));
+		String idmenu = String.valueOf(table.getValueAt(fila, 2));
+		combomenudetalle.setSelectedItem(buscarComboItem(combomenudetalle, idmenu));
+		txtcantidad.setText(String.valueOf(table.getValueAt(fila, 3)));                                                                                                                                                                                                                                                                          
+		txtpreciouni.setText(String.valueOf(table.getValueAt(fila, 4)));
+		txtsubtotal.setText(String.valueOf(table.getValueAt(fila, 5)));
+		
+	}
+	private String buscarComboItem(JComboBox<String> combo, String idBuscado) {
+		for (int i = 0; i < combo.getItemCount(); i++) {
+			String item = combo.getItemAt(i);
+			if (item.startsWith(idBuscado.trim() + " ")) {
+				return item;
+			}
+		}
+		return null;
+	}
+	
+	protected void do_btnModificar_actionPerformed(ActionEvent e) {
+		int iddetpedido = leeriddetallepedido();
+	    if (iddetpedido == -1) return;
+
+	   
+	    DetallePedido detalleExistente = arredetpedido.buscarID(iddetpedido);
+	    if (detalleExistente == null) {
+	        JOptionPane.showMessageDialog(this, "No existe un detalle pedido con ID: " + iddetpedido);
+	        return;
+	    }
+
+	    
+	    int idpedido = getidselect(combopedido);
+	    int idmenu = getidselect(combomenudetalle);
+	    int cantidad = leercantidad();
+	    double precioU = leer_precio_Uni();
+	    double subtotal = leersubtotal();
+
+	    if (cantidad == -1 || precioU == -1 || subtotal == -1) return;
+
+	    Menu menuSel = arremenu.buscarID(idmenu);
+	    Pedido pedidoSel = arrepedido.buscarID(idpedido);
+
+	    if (menuSel == null || pedidoSel == null) {
+	        JOptionPane.showMessageDialog(this, "Debe seleccionar un pedido y un menú válidos.");
+	        return;
+	    }
+
+	    DetallePedido modificado = new DetallePedido(iddetpedido, pedidoSel, menuSel, cantidad, precioU, subtotal);
+	    arredetpedido.modificarDetallePedido(modificado);
+	  actualizarTotalEnHistorial(idpedido);
+	    JOptionPane.showMessageDialog(this, "Detalle pedido con ID " + iddetpedido + " modificado correctamente.");
+
+	    listar("");
+	    limpiarCampos();
+		
+	}
+	protected void do_btnBuscar_actionPerformed(ActionEvent e) {
+		 int id = leeriddetallepedido();
+		    if (id == -1) return;
+
+		    DetallePedido d = arredetpedido.buscarID(id);
+		    if (d == null) {
+		        JOptionPane.showMessageDialog(this, "No se encontró un detalle pedido con ID: " + id);
+		        return;
+		    }
+
+		    
+		    txtid_detalle.setText(String.valueOf(d.getIdDetalle()));
+		    txtcantidad.setText(String.valueOf(d.getCantidad()));
+		    txtpreciouni.setText(String.valueOf(d.getPrecio_uni()));
+		    txtsubtotal.setText(String.valueOf(d.getSubtotal()));
+
+		    
+		    for (int i = 0; i < combopedido.getItemCount(); i++) {
+		        if (combopedido.getItemAt(i).startsWith(d.getPedido().getIdPedido() + " -")) {
+		            combopedido.setSelectedIndex(i);
+		            break;
+		        }
+		    }
+
+		    for (int i = 0; i < combomenudetalle.getItemCount(); i++) {
+		        if (combomenudetalle.getItemAt(i).startsWith(d.getMenu().getIdMenu() + " -")) {
+		            combomenudetalle.setSelectedIndex(i);
+		            break;
+		        }
+		    }
+		
+	}
+	 protected void do_btnNewButton_actionPerformed(ActionEvent e) {
+		int opcion = JOptionPane.showConfirmDialog(
+	            null,
+	            "¿Deseas regresar al inicio?",
+	            "Confirmar",
+	            JOptionPane.YES_NO_OPTION
+	        );
+	        
+	        if (opcion == JOptionPane.YES_OPTION) {
+	            VInicio VI = new VInicio();
+	            VI.setVisible(true);
+	            dispose(); 
+	        }
+	}
+	protected void do_btnNewButton_1_actionPerformed(ActionEvent e) {
+		int opcion = JOptionPane.showConfirmDialog(
+	            null,
+	            "¿Deseas regresar atras?",
+	            "Confirmar",
+	            JOptionPane.YES_NO_OPTION
+	        );
+	        
+	        if (opcion == JOptionPane.YES_OPTION) {
+	            VRealizarPedido VRP = new VRealizarPedido();
+	            VRP.setVisible(true);
+	            dispose(); 
+	        }
+	}
+	
+}
