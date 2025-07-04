@@ -1,0 +1,394 @@
+package GUI;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+
+import ARREGLOS.ArregloMesa;
+import CLASES.Mesa;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JTable;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
+
+public class VGestionMesa extends JFrame implements ActionListener, MouseListener {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JLabel lblNewLabel;
+	private JLabel lblRegistrarMesa;
+	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_2;
+	private JLabel lblNewLabel_3;
+	private JTextField txtMNum;
+	private JTextField txtIDMesa;
+	private JButton btnNewButton;
+	private JButton btnAgregar;
+	private JButton btnNewButton_1;
+	private JButton btnNewButton_2;
+	private JButton btnNewButton_3;
+	private JButton btnModificar;
+
+	ArregloMesa arreMesa = new ArregloMesa();
+	private JComboBox<String> comboestadomesa;
+	private JScrollPane scrollPane;
+	private JTable table;
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					VGestionMesa frame = new VGestionMesa();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	public VGestionMesa() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 560, 511);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		{
+			lblNewLabel = new JLabel("RESTAURANTE YURI");
+			lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+			lblNewLabel.setBounds(115, 0, 297, 33);
+			contentPane.add(lblNewLabel);
+		}
+		{
+			lblRegistrarMesa = new JLabel("REGISTRAR MESA");
+			lblRegistrarMesa.setFont(new Font("Times New Roman", Font.PLAIN, 21));
+			lblRegistrarMesa.setBounds(178, 51, 179, 33);
+			contentPane.add(lblRegistrarMesa);
+		}
+		{
+			lblNewLabel_1 = new JLabel("ID Mesa:");
+			lblNewLabel_1.setBounds(10, 123, 68, 14);
+			contentPane.add(lblNewLabel_1);
+		}
+		{
+			lblNewLabel_2 = new JLabel("Número:");
+			lblNewLabel_2.setBounds(10, 148, 68, 14);
+			contentPane.add(lblNewLabel_2);
+		}
+		{
+			lblNewLabel_3 = new JLabel("Estado:");
+			lblNewLabel_3.setBounds(10, 173, 68, 14);
+			contentPane.add(lblNewLabel_3);
+		}
+		{
+			txtMNum = new JTextField();
+			txtMNum.setColumns(10);
+			txtMNum.setBounds(110, 145, 150, 20);
+			contentPane.add(txtMNum);
+		}
+		{
+			txtIDMesa = new JTextField();
+			txtIDMesa.setColumns(10);
+			txtIDMesa.setBounds(110, 120, 150, 20);
+			contentPane.add(txtIDMesa);
+		}
+		{
+			btnNewButton = new JButton("Eliminar");
+			btnNewButton.addActionListener(this);
+			btnNewButton.setBounds(374, 169, 89, 23);
+			contentPane.add(btnNewButton);
+		}
+		{
+			btnAgregar = new JButton("Agregar");
+			btnAgregar.addActionListener(this);
+			btnAgregar.setBounds(374, 119, 89, 23);
+			contentPane.add(btnAgregar);
+		}
+		{
+			btnNewButton_1 = new JButton("Buscar por ID");
+			btnNewButton_1.addActionListener(this);
+			btnNewButton_1.setBounds(303, 203, 160, 23);
+			contentPane.add(btnNewButton_1);
+		}
+		{
+			btnNewButton_2 = new JButton("VOLVER AL INICIO");
+			btnNewButton_2.addActionListener(this);
+			btnNewButton_2.setBounds(392, 428, 142, 33);
+			contentPane.add(btnNewButton_2);
+		}
+		{
+			btnNewButton_3 = new JButton("VOLVER ATRAS");
+			btnNewButton_3.addActionListener(this);
+			btnNewButton_3.setBounds(242, 428, 140, 33);
+			contentPane.add(btnNewButton_3);
+		}
+		{
+			btnModificar = new JButton("Modificar");
+			btnModificar.addActionListener(this);
+			btnModificar.setBounds(374, 144, 89, 23);
+			contentPane.add(btnModificar);
+		}
+		{
+			comboestadomesa = new JComboBox<String>();
+			comboestadomesa.setModel(new DefaultComboBoxModel<String>(new String[] {"Disponible", "Ocupado"}));
+			comboestadomesa.setBounds(156, 169, 104, 22);
+			contentPane.add(comboestadomesa);
+		}
+		{
+			scrollPane = new JScrollPane();
+			scrollPane.setBounds(98, 261, 314, 139);
+			contentPane.add(scrollPane);
+			{
+				table = new JTable();
+				table.addMouseListener(this);
+				table.setFillsViewportHeight(true);
+				scrollPane.setViewportView(table);
+			}
+		}
+		listar("");
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnNewButton_1) {
+			do_btnNewButton_1_actionPerformed(e);
+		}
+		if (e.getSource() == btnNewButton) {
+			do_btnNewButton_actionPerformed(e);
+		}
+		if (e.getSource() == btnModificar) {
+			do_btnModificar_actionPerformed(e);
+		}
+		if (e.getSource() == btnNewButton_2) {
+			do_btnNewButton_2_actionPerformed(e);
+		}
+		if (e.getSource() == btnNewButton_3) {
+			do_btnNewButton_3_actionPerformed(e);
+		}
+		if (e.getSource() == btnAgregar) {
+			do_btnAgregar_actionPerformed(e);
+		}
+	}
+	
+	int leerid() {
+		try {
+			String id= txtIDMesa.getText().trim();
+			int idpositivo= Integer.parseInt(txtIDMesa.getText()); 
+			if(id.isEmpty()) {
+				JOptionPane.showMessageDialog(this, "El ID de mesa no puede estar vacío.");
+				return -1;
+			}else if( idpositivo <0 ) {
+				JOptionPane.showMessageDialog(this, "El ID debe ser positivo.");
+				return -1;
+			}
+			return Integer.parseInt(id);
+		}catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "El ID de mesa debe ser un número entero válido.");
+			return -1;
+		}
+		
+	}
+	int leernumero() {
+		try {
+			String nu= txtMNum.getText().trim();
+			int idpositivo= Integer.parseInt(txtMNum.getText()); 
+			if(nu.isEmpty()) {
+				JOptionPane.showMessageDialog(this, "El numero de la mesa no puede estar vacío.");
+				return -1;
+			}else if( idpositivo <0 ) {
+				JOptionPane.showMessageDialog(this, "El numero debe ser positivo.");
+				return -1;
+			}
+			return Integer.parseInt(nu);
+		}catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "El numero de la mesa debe ser un número entero válido.");
+			return -1;
+		}
+		
+	}
+	
+	protected void do_btnAgregar_actionPerformed(ActionEvent e) {
+		String estadito = comboestadomesa.getSelectedItem().toString();
+		if(leerid() ==-1){
+			return;
+		}else if(leernumero() == -1){
+			return;
+		}else {
+	    Mesa mes = arreMesa.buscarID(leerid());
+				if (mes == null) {
+					Mesa mesita = new Mesa(leerid(), leernumero(), estadito);
+					arreMesa.adicionarMesa(mesita);
+					JOptionPane.showMessageDialog(this, "Mesa con el ID: " + leerid() + " agregado correctamente a la BD.");
+					listar("");
+					limpiarCampos(); 
+				
+				} else {
+					JOptionPane.showMessageDialog(this, "Ya existe un Mesa con el ID: " + leerid() + " en la base de datos. Por favor, use otro ID o modifique el existente.");
+				}
+		}
+	}
+	private void limpiarCampos() {
+		txtIDMesa.setText("");
+		txtMNum.setText("");
+		
+	}
+	protected void do_btnNewButton_3_actionPerformed(ActionEvent e) {
+		int opcion = JOptionPane.showConfirmDialog(
+	            null,
+	            "¿Deseas regresar atras?",
+	            "Confirmar",
+	            JOptionPane.YES_NO_OPTION
+	        );
+	        
+	        if (opcion == JOptionPane.YES_OPTION) {
+	            VAdminOpciones VA = new VAdminOpciones();
+	            VA.setVisible(true);
+	            dispose(); 
+	        }
+	}
+	protected void do_btnNewButton_2_actionPerformed(ActionEvent e) {
+	    int opcion = JOptionPane.showConfirmDialog(
+	            null,
+	            "¿Deseas regresar al inicio?",
+	            "Confirmar",
+	            JOptionPane.YES_NO_OPTION
+	        );
+	        
+	        if (opcion == JOptionPane.YES_OPTION) {
+	            VInicio VI = new VInicio();
+	            VI.setVisible(true);
+	            dispose(); 
+	        }
+	   
+	}
+	protected void do_btnModificar_actionPerformed(ActionEvent e) {
+		String estadito = comboestadomesa.getSelectedItem().toString();
+		int id = leerid(); 
+		if(leerid() ==-1){
+			return;
+		}else if(leernumero() == -1){
+			return;
+		}else {
+	    Mesa mes = arreMesa.buscarID(leerid());
+	    if (mes!= null) {
+			mes.setNumero(leernumero());
+			mes.setEstado(estadito);
+			
+			arreMesa.modificarMesa(mes);
+			JOptionPane.showMessageDialog(this, "Mesa con ID " + id + " modificado correctamente en la BD.");
+			listar("");
+			limpiarCampos();
+			
+		} else {
+			JOptionPane.showMessageDialog(this, "Mesa con ID " + id + " no encontrado en la base de datos para modificar.");
+		}
+		}
+	}
+	protected void do_btnNewButton_actionPerformed(ActionEvent e) {
+		int id = leerid();
+		if (id == -1) return;
+
+		Mesa mes = arreMesa.buscarID(id);
+		if (mes != null) {
+			int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de eliminar la mesa con ID: " + id, "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
+			if (confirmacion == JOptionPane.YES_OPTION) {
+				arreMesa.eliminar(mes);
+				JOptionPane.showMessageDialog(this, "ID " + id + " eliminado del registro en la BD.");
+				listar("");
+				limpiarCampos();
+			
+			}
+		} else {
+			JOptionPane.showMessageDialog(this, "Mesa con ID " + id + " no encontrado en la base de datos para eliminar.");
+		}
+		
+	}
+	protected void do_btnNewButton_1_actionPerformed(ActionEvent e) {
+		int id = leerid();
+		if (id == -1) return;
+
+		Mesa mes = arreMesa.buscarID(id);
+		if (mes != null) {
+			txtMNum.setText(String.valueOf(mes.getNumero()));
+			comboestadomesa.setSelectedItem(mes.getEstado());
+			JOptionPane.showMessageDialog(this, "Mesa encontrado.");
+		} else {
+			JOptionPane.showMessageDialog(this, "No se encontró Mesa con ese ID.");
+		}
+	}
+	public void mouseClicked(MouseEvent e) {
+		if (e.getSource() == table) {
+			do_table_mouseClicked(e);
+		}
+	}
+	public void mouseEntered(MouseEvent e) {
+	}
+	public void mouseExited(MouseEvent e) {
+	}
+	public void mousePressed(MouseEvent e) {
+	}
+	public void mouseReleased(MouseEvent e) {
+	}
+	protected void do_table_mouseClicked(MouseEvent e) {
+		int fila = table.getSelectedRow();
+		txtIDMesa.setText(String.valueOf(table.getValueAt(fila, 0)));
+		txtMNum.setText(String.valueOf(table.getValueAt(fila, 1)));
+		String estaditofromtable= String.valueOf(table.getValueAt(fila, 2));
+		comboestadomesa.setSelectedItem(estaditofromtable);
+	}
+	public void listar(String nom) {
+		DefaultTableModel modelo = new DefaultTableModel();
+
+		ArregloMesa m = new ArregloMesa();
+
+		ArrayList<Mesa> lista = new ArrayList<Mesa>();
+
+		if(nom.length() == 0) lista =m.listarMesas();
+
+		
+		modelo.setRowCount(lista.size());
+
+		Iterator<Mesa> it = lista.iterator();
+
+		modelo.addColumn("ID");
+
+		modelo.addColumn("Numero mesa");
+
+		modelo.addColumn("estado");
+
+		int i = 0;
+
+		while(it.hasNext()) {
+
+		Object obj = it.next();
+
+		Mesa mes = (Mesa)obj;
+
+		modelo.setValueAt(mes.getIdMesa(), i, 0);
+
+		modelo.setValueAt(mes.getNumero(), i, 1);
+
+		modelo.setValueAt(mes.getEstado(), i, 2);
+
+		i++;
+
+		}
+
+		table.setModel(modelo);
+	}
+}
