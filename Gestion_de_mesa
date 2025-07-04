@@ -1,0 +1,87 @@
+package GUI;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class VInicio extends JFrame implements ActionListener {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JLabel lblNewLabel;
+	private JButton btnNewButton;
+	private JButton btnRegistrarPedido;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					VInicio frame = new VInicio();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public VInicio() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 265);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		{
+			lblNewLabel = new JLabel("RESTAURANTE YURI");
+			lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 27));
+			lblNewLabel.setBounds(80, 0, 264, 33);
+			contentPane.add(lblNewLabel);
+		}
+		{
+			btnNewButton = new JButton("ADMNISTRADOR");
+			btnNewButton.addActionListener(this);
+			btnNewButton.setBounds(124, 66, 175, 44);
+			contentPane.add(btnNewButton);
+		}
+		{
+			btnRegistrarPedido = new JButton("MOZO - CAJERO");
+			btnRegistrarPedido.addActionListener(this);
+			btnRegistrarPedido.setBounds(124, 151, 175, 44);
+			contentPane.add(btnRegistrarPedido);
+		}
+	}
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnRegistrarPedido) {
+			do_btnRegistrarPedido_actionPerformed(e);
+		}
+		if (e.getSource() == btnNewButton) {
+			do_btnNewButton_actionPerformed(e);
+		}
+	}
+	protected void do_btnNewButton_actionPerformed(ActionEvent e) {
+        VSesion VS = new VSesion();
+		VS.setVisible(true);
+		dispose(); 
+	
+	}
+	protected void do_btnRegistrarPedido_actionPerformed(ActionEvent e) {
+		VRegistroCliente Vrcl = new VRegistroCliente();
+		Vrcl.setVisible(true);
+		dispose(); 
+	}
+}
